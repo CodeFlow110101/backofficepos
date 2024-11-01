@@ -27,13 +27,13 @@ $submit = function (Request $request) {
 ?>
 
 <div class="h-dvh flex justify-center items-center">
-    <div class="w-1/3 p-10 shadow-2xl shadow-black/80">
+    <div class="w-1/3 p-10 rounded-lg shadow-2xl shadow-black/40">
         <form wire:submit="submit" class="h-min grid grid-cols-1 gap-8 px-4">
             <div class="text-center text-amber-500 py-6 font-bold text-3xl">
                 BackOffice POS
             </div>
             <div>
-                <input wire:model="email" type="text" class="border w-full border-amber-500 outline-none p-3" placeholder="email">
+                <input wire:model="email" type="text" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="email">
                 @error('email')
                 <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                     <span class="error">{{ $message }}</span>
@@ -41,14 +41,14 @@ $submit = function (Request $request) {
                 @enderror
             </div>
             <div>
-                <input wire:model="password" type="password" class="border w-full border-amber-500 outline-none p-3" placeholder="password">
+                <input wire:model="password" type="password" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="password">
                 @error('password')
                 <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                     <span class="error">{{ $message }}</span>
                 </div>
                 @enderror
             </div>
-            <button type="submit" class="bg-amber-500 whitespace-nowrap px-10 py-2 w-min mx-auto text-lg font-semibold text-white">
+            <button type="submit" class="bg-amber-500 rounded-lg whitespace-nowrap px-10 py-2 w-min mx-auto text-lg font-semibold text-white">
                 <div wire:loading.remove>Sign in</div>
                 <div>
                     <svg wire:loading aria-hidden="true" class="w-8 h-8 text-transparent animate-spin fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

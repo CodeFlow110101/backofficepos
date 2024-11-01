@@ -20,10 +20,20 @@ mount(function () {
 })
 ?>
 
-<div>
+<div class="h-screen flex flex-col">
     @if($path == 'sign-in')
     <livewire:sign-in />
-    @elseif($path == 'stock')
-    <livewire:stock />
+    @elseif(in_array($path,['stock']) )
+    <livewire:nav-bar />
+    <div class="flex justify-between grow">
+        <div class="w-1/5 border-r-2 border-black/10">
+            <livewire:side-bar />
+        </div>
+        @if($path == 'stock')
+        <div class="w-4/5 bg-black/10 px-4 py-8">
+            <livewire:stock />
+        </div>
+        @endif
+    </div>
     @endif
 </div>
