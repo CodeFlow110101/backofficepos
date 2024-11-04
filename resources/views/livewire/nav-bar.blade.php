@@ -2,9 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 
-use function Livewire\Volt\{state, mount};
+use function Livewire\Volt\{state, mount, on};
 
 state(['user']);
+
+on(['reset-nav-bar-user' => function () {
+    $this->user = Auth::user();
+}]);
+
 mount(function () {
     $this->user = Auth::user();
 });
