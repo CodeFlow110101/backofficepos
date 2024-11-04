@@ -1,16 +1,11 @@
 <?php
 
-use App\Models\Warehouse;
+use App\Models\Inventory;
 
 use function Livewire\Volt\{state, with};
 
-with(fn() => ['warehouses' => Warehouse::get()]);
+with(fn() => ['inventories' => Inventory::get()]);
 
-
-$redirectToWarehouse = function ($id) {
-    session()->flash('id', $id);
-    $this->redirectRoute('manage-warehouse', navigate: true);
-};
 ?>
 
 
@@ -19,16 +14,16 @@ $redirectToWarehouse = function ($id) {
         <div>
             {{request()->path()}}
         </div>
-        <a href="/manage-warehouse" wire:navigate>
+        <a href="/manage-inventory" wire:navigate>
             <div class="bg-amber-500 inline-flex gap-3 rounded-lg whitespace-nowrap px-8 py-2 w-min mx-auto text-lg text-white">
                 <div class="inline-flex gap-0 items-center">
                     <div>
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
+                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                         </svg>
                     </div>
                     <div>
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
                         </svg>
                     </div>
@@ -56,11 +51,11 @@ $redirectToWarehouse = function ($id) {
             </div>
             <div class="grow">
                 <div class="overflow-y-auto max-h-[55vh]">
-                    @foreach($warehouses as $warehouse)
+                    @foreach($inventories as $inventory)
                     <div class="flex text-black/50 p-2 border-b border-black/20">
                         <div>{{$loop->iteration}}</div>
-                        <div class="grow text-center">{{$warehouse->name}}</div>
-                        <div wire:click="redirectToWarehouse({{$warehouse->id}})" class="px-3 cursor-pointer">
+                        <div class="grow text-center">{{$inventory->name}}</div>
+                        <div wire:click="redirectToWarehouse({{$inventory->id}})" class="px-3 cursor-pointer">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                             </svg>

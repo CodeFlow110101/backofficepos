@@ -2,28 +2,43 @@
 
 use App\Models\Warehouse;
 
-use function Livewire\Volt\{state, rules};
+use function Livewire\Volt\{state, rules, mount};
 
-state(['name', 'address']);
+state(['name', 'address', 'id']);
 
 rules(['name' => 'required:min:3']);
 
 $submit = function () {
     $this->validate();
 
-    Warehouse::create([
-        'name' => $this->name,
-        'address' => $this->address,
-    ]);
-
+    if ($this->id) {
+        Warehouse::find($this->id)->update([
+            'name' => $this->name,
+            'address' => $this->address,
+        ]);
+    } else {
+        Warehouse::create([
+            'name' => $this->name,
+            'address' => $this->address,
+        ]);
+    }
     $this->redirectRoute('warehouse', navigate: true);
 };
+
+mount(function ($id) {
+    $this->id = $id;
+    if ($id) {
+        $warehouse = Warehouse::find($id);
+        $this->name = $warehouse->name;
+        $this->address = $warehouse->address;
+    }
+});
 ?>
 
 
 <div class="h-full flex flex-col gap-8">
     <div class="text-2xl font-semibold text-black/70 capitalize">
-        {{request()->path()}}
+        {{($id ? 'edit' : 'add').' warehouse'}}
     </div>
     <div class="grow bg-white rounded-lg shadow-2xl shadow-black/30 p-4">
         <div class="h-full flex justify-between gap-4">

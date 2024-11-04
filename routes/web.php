@@ -9,6 +9,8 @@ Route::get('/', function () {
 });
 Volt::route('/sign-in', 'landing-page')->name('sign-in');
 Volt::route('/stock', 'landing-page')->name('stock');
+Volt::route('/inventory', 'landing-page')->name('inventory');
+Volt::route('/manage-inventory', 'landing-page')->name('manage-inventory');
 Volt::route('/setting', 'landing-page')->name('setting');
 Volt::route('/warehouse', 'landing-page')->name('warehouse');
-Volt::route('/add-edit-warehouse', 'landing-page')->name('add-edit-warehouse');
+Volt::route('/manage-warehouse', 'landing-page')->name('manage-warehouse');

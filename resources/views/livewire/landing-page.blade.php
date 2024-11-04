@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, layout, mount};
 
-state(['path']);
+state(['path', 'id']);
 
 layout('components.layouts.app');
 
@@ -14,8 +14,12 @@ mount(function () {
 
     if ($isAuth && in_array($this->path, ['sign-in'])) {
         $this->redirectRoute('stock', navigate: true);
-    } elseif (!$isAuth && in_array($this->path, ['stock', 'setting', 'warehouse','add-edit-warehouse'])) {
+    } elseif (!$isAuth && in_array($this->path, ['stock', 'setting', 'warehouse', 'manage-warehouse', 'inventory', 'manage-inventory'])) {
         $this->redirectRoute('sign-in', navigate: true);
+    }
+
+    if (session()->has('id')) {
+        $this->id = session()->get('id');
     }
 })
 ?>
@@ -23,7 +27,7 @@ mount(function () {
 <div class="h-screen flex flex-col">
     @if($path == 'sign-in')
     <livewire:sign-in />
-    @elseif(in_array($path,['stock','setting','warehouse','add-edit-warehouse']) )
+    @elseif(in_array($path,['stock','setting','warehouse','manage-warehouse','inventory','manage-inventory']) )
     <livewire:nav-bar />
     <div class="flex justify-between grow">
         <div class="w-1/5 border-r-2 border-black/10">
@@ -36,8 +40,12 @@ mount(function () {
             <livewire:setting.setting />
             @elseif($path == 'warehouse')
             <livewire:warehouse.warehouse />
-            @elseif($path == 'add-edit-warehouse')
-            <livewire:warehouse.add-edit-warehouse />
+            @elseif($path == 'manage-warehouse')
+            <livewire:warehouse.manage-warehouse :id="$id" />
+            @elseif($path == 'inventory')
+            <livewire:inventory.inventory />
+            @elseif($path == 'manage-inventory')
+            <livewire:inventory.manage-inventory :id="$id" />
             @endif
         </div>
     </div>
