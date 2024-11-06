@@ -1,14 +1,15 @@
 <?php
 
 use App\Models\Inventory;
+use App\Models\Stock;
 
 use function Livewire\Volt\{state, with};
 
-with(fn() => ['inventories' => Inventory::get()]);
+with(fn() => ['stocks' => Stock::get()]);
 
-$redirectToInventory = function ($id) {
+$redirectToStock = function ($id) {
     session()->flash('id', $id);
-    $this->redirectRoute('manage-inventory', navigate: true);
+    $this->redirectRoute('manage-stock', navigate: true);
 };
 ?>
 
@@ -18,12 +19,12 @@ $redirectToInventory = function ($id) {
         <div>
             {{request()->path()}}
         </div>
-        <a href="/manage-inventory" wire:navigate>
+        <a href="/manage-stock" wire:navigate>
             <div class="bg-amber-500 inline-flex gap-3 rounded-lg whitespace-nowrap px-8 py-2 w-min mx-auto text-lg text-white">
                 <div class="inline-flex gap-0 items-center">
                     <div>
                         <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z" />
                         </svg>
                     </div>
                     <div>
@@ -55,17 +56,17 @@ $redirectToInventory = function ($id) {
             </div>
             <div class="grow">
                 <div class="overflow-y-auto max-h-[55vh]">
-                    @foreach($inventories as $inventory)
+
                     <div class="flex text-black/50 p-2 border-b border-black/20">
-                        <div>{{$loop->iteration}}</div>
-                        <div class="grow text-center">{{$inventory->name}}</div>
-                        <div wire:click="redirectToInventory({{$inventory->id}})" class="px-3 cursor-pointer">
+                        <div>hello</div>
+                        <div class="grow text-center">hello</div>
+                        <div wire:click="redirectToStock()" class="px-3 cursor-pointer">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                             </svg>
                         </div>
                     </div>
-                    @endforeach
+
                 </div>
             </div>
         </div>

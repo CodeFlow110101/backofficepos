@@ -5,9 +5,9 @@ use App\Models\Warehouse;
 
 use function Livewire\Volt\{state, rules, mount};
 
-state(['name', 'description', 'id']);
+state(['warehouse', 'inventory', 'id']);
 
-rules(['name' => 'required:min:3']);
+rules(['warehouse' => 'required']);
 
 $submit = function () {
     $this->validate();
@@ -39,7 +39,7 @@ mount(function ($id) {
 
 <div class="h-full flex flex-col gap-8">
     <div class="text-2xl font-semibold text-black/70 capitalize">
-        {{($id ? 'edit' : 'add').' inventory'}}
+        {{($id ? 'edit' : 'add').' stock'}}
     </div>
     <div class="grow bg-white rounded-lg shadow-2xl shadow-black/30 p-4">
         <div class="h-full flex justify-between gap-4">
@@ -53,17 +53,36 @@ mount(function ($id) {
                 <div class="flex justify-center size-full items-center border border-black/30 rounded-xl">
                     <form wire:submit="submit" class="h-full flex flex-col gap-8 py-8 px-4 w-11/12">
                         <div>
-                            <input wire:model="name" type="text" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3" placeholder="Name">
-                            @error('name')
+                            <select wire:model="warehouse" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3">
+                                <option selected value="">Select a Warehouse</option>
+                            </select>
+                            @error('warehouse')
                             <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                                 <span class="error">{{ $message }}</span>
                             </div>
                             @enderror
                         </div>
-                        <div class="grow">
-                            <textarea wire:model="description" type="text" class="h-full border w-full rounded-lg text-black/70 border-black/30 outline-none p-3" placeholder="description (optional)">
-                            </textarea>
-                            @error('description')
+                        <div>
+                            <select wire:model="inventory" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3">
+                                <option selected value="">Select an Inventory</option>
+                            </select>
+                            @error('inventory')
+                            <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
+                                <span class="error">{{ $message }}</span>
+                            </div>
+                            @enderror
+                        </div>
+                        <div>
+                            <input wire:model="price" type="text" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3" placeholder="Price">
+                            @error('price')
+                            <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
+                                <span class="error">{{ $message }}</span>
+                            </div>
+                            @enderror
+                        </div>
+                        <div>
+                            <input wire:model="quantity" type="text" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3" placeholder="Quantity">
+                            @error('quantity')
                             <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                                 <span class="error">{{ $message }}</span>
                             </div>

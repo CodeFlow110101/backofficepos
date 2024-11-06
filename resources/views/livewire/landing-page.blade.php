@@ -14,7 +14,7 @@ mount(function () {
 
     if ($isAuth && in_array($this->path, ['sign-in'])) {
         $this->redirectRoute('stock', navigate: true);
-    } elseif (!$isAuth && in_array($this->path, ['stock', 'setting', 'warehouse', 'manage-warehouse', 'inventory', 'manage-inventory'])) {
+    } elseif (!$isAuth && in_array($this->path, ['stock', 'manage-stock', 'setting', 'warehouse', 'manage-warehouse', 'inventory', 'manage-inventory'])) {
         $this->redirectRoute('sign-in', navigate: true);
     }
 
@@ -27,7 +27,7 @@ mount(function () {
 <div class="h-screen flex flex-col">
     @if($path == 'sign-in')
     <livewire:sign-in />
-    @elseif(in_array($path,['stock','setting','warehouse','manage-warehouse','inventory','manage-inventory']) )
+    @elseif(in_array($path,['stock','manage-stock','setting','warehouse','manage-warehouse','inventory','manage-inventory']) )
     <livewire:nav-bar />
     <div class="flex justify-between grow">
         <div class="w-1/5 border-r-2 border-black/10">
@@ -35,7 +35,9 @@ mount(function () {
         </div>
         <div class="w-4/5 h-full bg-black/10 px-4 py-8">
             @if($path == 'stock')
-            <livewire:stock />
+            <livewire:stock.stock />
+            @elseif($path == 'manage-stock')
+            <livewire:stock.manage-stock :id="$id" />
             @elseif($path == 'setting')
             <livewire:setting.setting />
             @elseif($path == 'warehouse')
