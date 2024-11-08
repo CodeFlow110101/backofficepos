@@ -33,7 +33,7 @@ $submit = function (Request $request) {
                 BackOffice POS
             </div>
             <div>
-                <input wire:model="email" type="text" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="email">
+                <input wire:model="email" type="text" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="Email">
                 @error('email')
                 <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                     <span class="error">{{ $message }}</span>
@@ -41,7 +41,7 @@ $submit = function (Request $request) {
                 @enderror
             </div>
             <div>
-                <input wire:model="password" type="password" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="password">
+                <input wire:model="password" type="password" class="border w-full rounded-lg border-amber-500 outline-none p-3" placeholder="Password">
                 @error('password')
                 <div wire:transition.in.scale.origin.top.duration.1000ms class="text-red-500 text-sm">
                     <span class="error">{{ $message }}</span>

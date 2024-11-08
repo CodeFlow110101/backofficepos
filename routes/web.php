@@ -15,3 +15,4 @@ Volt::route('/manage-inventory', 'landing-page')->name('manage-inventory');
 Volt::route('/setting', 'landing-page')->name('setting');
 Volt::route('/warehouse', 'landing-page')->name('warehouse');
 Volt::route('/manage-warehouse', 'landing-page')->name('manage-warehouse');
+Volt::route('/delivery', 'landing-page')->name('delivery');
