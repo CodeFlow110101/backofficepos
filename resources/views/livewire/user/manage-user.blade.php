@@ -11,7 +11,7 @@ state(['name', 'email', 'role', 'password', 'password_confirmation', 'id']);
 
 rules(fn() => [
     'name' => ['required', 'min:3'],
-    'email' => ['required', 'email'],
+    'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->id),],
     'role' => ['required'],
     'password' => [Rule::requiredIf(!$this->id), !$this->id || $this->password ? 'min:6' : null, !$this->id || $this->password ? 'confirmed' : null,],
 ]);

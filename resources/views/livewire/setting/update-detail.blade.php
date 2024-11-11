@@ -1,13 +1,21 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, mount, rules};
 
 state(['name', 'email', 'user']);
 
-rules(['name' => 'required|min:3', 'email' => 'required|email']);
+rules(fn() => [
+    'name' => ['required', 'min:3'],
+    'email' => [
+        'required',
+        'email',
+        Rule::unique('users', 'email')->ignore($this->user->id),
+    ],
+]);
 
 $submit = function () {
     $this->validate();
