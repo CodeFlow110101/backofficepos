@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, mount, on};
 
-state(['user']);
+state(['user', 'role']);
 
 on(['reset-nav-bar-user' => function () {
     $this->user = Auth::user();
@@ -12,6 +13,7 @@ on(['reset-nav-bar-user' => function () {
 
 mount(function () {
     $this->user = Auth::user();
+    $this->role = Role::find($this->user->role_id)->name;
 });
 
 ?>
@@ -28,7 +30,7 @@ mount(function () {
         </div>
         <div class="flex flex-col justify-around">
             <div class="font-bold capitalize text-black/80">{{$user->name}}</div>
-            <div class="text-sm text-black/60">admin</div>
+            <div class="text-sm text-black/60 capitalize">{{$role}}</div>
         </div>
     </div>
 </div>

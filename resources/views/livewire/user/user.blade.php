@@ -1,15 +1,15 @@
 <?php
 
-use App\Models\Inventory;
-use App\Models\Stock;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-use function Livewire\Volt\{state, with};
+use function Livewire\Volt\{mount, with};
 
-with(fn() => ['stocks' => Stock::with(['warehouse', 'inventory'])->get()]);
+with(fn() => ['users' => User::where('id', '!=', Auth::user()->id)->with(['role'])->get()]);
 
-$redirectToStock = function ($id) {
+$redirectToUser = function ($id) {
     session()->flash('id', $id);
-    $this->redirectRoute('manage-stock', navigate: true);
+    $this->redirectRoute('manage-user', navigate: true);
 };
 ?>
 
@@ -19,12 +19,12 @@ $redirectToStock = function ($id) {
         <div>
             {{request()->path()}}
         </div>
-        <a href="/manage-stock" wire:navigate>
+        <a href="/manage-user" wire:navigate>
             <div class="bg-amber-500 inline-flex gap-3 rounded-lg whitespace-nowrap px-8 py-2 w-min mx-auto text-lg text-white">
                 <div class="inline-flex gap-0 items-center">
                     <div>
                         <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z" />
+                            <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                     </div>
                     <div>
@@ -53,22 +53,18 @@ $redirectToStock = function ($id) {
                 <thead class="bg-amber-500/30 text-black/50 w-full text-center">
                     <tr>
                         <th class="font-normal py-3">No</th>
-                        <th class="font-normal py-3">Warehouse</th>
-                        <th class="font-normal py-3">Inventory</th>
-                        <th class="font-normal py-3">Price</th>
-                        <th class="font-normal py-3">Quantity</th>
-                        <th class="font-normal py-3">Actions</th>
+                        <th class="font-normal py-3">Name</th>
+                        <th class="font-normal py-3">Role</th>
+                        <th class="font-normal py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($stocks as $stock)
+                    @foreach($users as $user)
                     <tr class="text-black/50 border-b border-black/20 w-full text-center">
                         <td class="py-3">{{$loop->iteration}}</td>
-                        <td class="py-3">{{$stock->warehouse->name}}</td>
-                        <td class="py-3">{{$stock->inventory->name}}</td>
-                        <td class="py-3">{{$stock->price}}</td>
-                        <td class="py-3">{{$stock->quantity}}</td>
-                        <td wire:click="redirectToStock({{$stock->id}})" class="py-3 flex justify-center cursor-pointer">
+                        <td class="py-3">{{$user->name}}</td>
+                        <td class="py-3 capitalize">{{$user->role->name}}</td>
+                        <td wire:click="redirectToUser({{$user->id}})" class="py-3 flex justify-center cursor-pointer">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                             </svg>
