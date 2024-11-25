@@ -14,7 +14,7 @@ mount(function () {
 
     if ($isAuth && in_array($this->path, ['sign-in'])) {
         $this->redirectRoute('stock', navigate: true);
-    } elseif (!$isAuth && in_array($this->path, ['stock', 'manage-stock', 'setting', 'warehouse', 'manage-warehouse', 'inventory', 'manage-inventory', 'delivery', 'manage-delivery', 'user', 'manage-user'])) {
+    } elseif (!$isAuth && in_array($this->path, ['stock', 'manage-stock', 'setting', 'warehouse', 'manage-warehouse', 'inventory', 'manage-inventory', 'delivery', 'manage-delivery', 'user', 'manage-user', 'manage-quantity'])) {
         $this->redirectRoute('sign-in', navigate: true);
     }
 
@@ -27,7 +27,7 @@ mount(function () {
 <div class="h-screen flex flex-col">
     @if($path == 'sign-in')
     <livewire:sign-in />
-    @elseif(in_array($path,['stock','manage-stock','setting','warehouse','manage-warehouse','inventory','manage-inventory','delivery','manage-delivery','user','manage-user']) )
+    @elseif(in_array($path,['stock','manage-stock','setting','warehouse','manage-warehouse','inventory','manage-inventory','delivery','manage-delivery','user','manage-user','manage-quantity-types']) )
     <livewire:nav-bar />
     <div class="flex justify-between grow">
         <div class="w-1/5 border-r-2 border-black/10">
@@ -48,6 +48,8 @@ mount(function () {
             <livewire:inventory.inventory />
             @elseif($path == 'manage-inventory')
             <livewire:inventory.manage-inventory :id="$id" />
+            @elseif($path == 'manage-quantity-types')
+            <livewire:inventory.manage-quantity-types />
             @elseif($path == 'delivery')
             <livewire:delivery.delivery />
             @elseif($path == 'manage-delivery')

@@ -5,7 +5,7 @@ use App\Models\Stock;
 
 use function Livewire\Volt\{state, with};
 
-with(fn() => ['stocks' => Stock::with(['warehouse', 'inventory'])->get()]);
+with(fn() => ['stocks' => Stock::with(['warehouse', 'inventory.quantitytype'])->get()]);
 
 $redirectToStock = function ($id) {
     session()->flash('id', $id);
@@ -56,6 +56,7 @@ $redirectToStock = function ($id) {
                         <th class="font-normal py-3">Warehouse</th>
                         <th class="font-normal py-3">Inventory</th>
                         <th class="font-normal py-3">Price</th>
+                        <th class="font-normal py-3">Quantity Type</th>
                         <th class="font-normal py-3">Quantity</th>
                         <th class="font-normal py-3">Actions</th>
                     </tr>
@@ -66,7 +67,8 @@ $redirectToStock = function ($id) {
                         <td class="py-3">{{$loop->iteration}}</td>
                         <td class="py-3">{{$stock->warehouse->name}}</td>
                         <td class="py-3">{{$stock->inventory->name}}</td>
-                        <td class="py-3">{{$stock->price}}</td>
+                        <td class="py-3">{{$stock->inventory->price}}</td>
+                        <td class="py-3">{{$stock->inventory->quantitytype->name}}</td>
                         <td class="py-3">{{$stock->quantity}}</td>
                         <td wire:click="redirectToStock({{$stock->id}})" class="py-3 flex justify-center cursor-pointer">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

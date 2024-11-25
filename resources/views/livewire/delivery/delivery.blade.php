@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Stock;
+use App\Models\Delivery;
 
 use function Livewire\Volt\{state, with};
 
-with(fn() => ['stocks' => Stock::with('warehouse', 'inventory')->get()]);
+with(fn() => ['deliveries' => Delivery::with('warehouse', 'user')->get()]);
 
 $redirectToDelivery = function ($id) {
     session()->flash('id', $id);
@@ -51,22 +51,22 @@ $redirectToDelivery = function ($id) {
                 <thead class="bg-amber-500/30 text-black/50 w-full text-center">
                     <tr>
                         <th class="font-normal py-3">No</th>
+                        <th class="font-normal py-3">Id</th>
                         <th class="font-normal py-3">Warehouse</th>
-                        <th class="font-normal py-3">Inventory</th>
-                        <th class="font-normal py-3">Price</th>
-                        <th class="font-normal py-3">Quantity</th>
+                        <th class="font-normal py-3">Salesperson</th>
+                        <th class="font-normal py-3">Vehicle No</th>
                         <th class="font-normal py-3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($stocks as $stock)
+                    @foreach($deliveries as $delivery)
                     <tr class="text-black/50 border-b border-black/20 w-full text-center">
                         <td class="py-3">{{$loop->iteration}}</td>
-                        <td class="py-3">{{$stock->warehouse->name}}</td>
-                        <td class="py-3">{{$stock->inventory->name}}</td>
-                        <td class="py-3">{{$stock->price}}</td>
-                        <td class="py-3">{{$stock->quantity}}</td>
-                        <td wire:click="redirectToDelivery({{$stock->id}})" class="py-3 flex justify-center cursor-pointer">
+                        <td class="py-3">{{$delivery->id}}</td>
+                        <td class="py-3">{{$delivery->warehouse->name}}</td>
+                        <td class="py-3">{{$delivery->user->name}}</td>
+                        <td class="py-3">{{$delivery->vehicle_no}}</td>
+                        <td wire:click="redirectToDelivery({{$delivery->id}})" class="py-3 flex justify-center cursor-pointer">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                             </svg>

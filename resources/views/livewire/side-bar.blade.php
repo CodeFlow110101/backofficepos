@@ -32,13 +32,13 @@ mount(function () {
             </div>
             <div class="@if(in_array($path ,['warehouse' , 'manage-warehouse'])) text-white @else group-hover:text-white transition-colors duration-200 @endif">Warehouse</div>
         </a>
-        <a href="/inventory" wire:navigate class="flex justify-start gap-2 items-center font-medium p-2 @if(in_array($path ,['inventory' , 'manage-inventory'])) bg-amber-500 @else text-black/70 hover:bg-amber-500 transition-colors duration-200 @endif rounded-lg group">
+        <a href="/inventory" wire:navigate class="flex justify-start gap-2 items-center font-medium p-2 @if(in_array($path ,['inventory' , 'manage-inventory' , 'manage-quantity-types'])) bg-amber-500 @else text-black/70 hover:bg-amber-500 transition-colors duration-200 @endif rounded-lg group">
             <div>
-                <svg class="w-5 h-5 @if(in_array($path ,['inventory' , 'manage-inventory'])) text-white @else text-black/70 group-hover:text-white transition-colors duration-200 @endif" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 @if(in_array($path ,['inventory' , 'manage-inventory' , 'manage-quantity-types'])) text-white @else text-black/70 group-hover:text-white transition-colors duration-200 @endif" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                 </svg>
             </div>
-            <div class="@if(in_array($path ,['inventory' , 'manage-inventory'])) text-white @else group-hover:text-white transition-colors duration-200 @endif">Inventory</div>
+            <div class="@if(in_array($path ,['inventory' , 'manage-inventory' , 'manage-quantity-types'])) text-white @else group-hover:text-white transition-colors duration-200 @endif">Inventory</div>
         </a>
         <a href="/stock" wire:navigate class="flex justify-start gap-2 items-center font-medium p-2 @if(in_array($path ,['stock' , 'manage-stock'])) bg-amber-500 @else text-black/70 hover:bg-amber-500 transition-colors duration-200 @endif rounded-lg group">
             <div>

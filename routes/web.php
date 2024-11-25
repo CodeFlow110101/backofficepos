@@ -20,3 +20,4 @@ Volt::route('/delivery', 'landing-page')->name('delivery');
 Volt::route('/manage-delivery', 'landing-page')->name('manage-delivery');
 Volt::route('/user', 'landing-page')->name('user');
 Volt::route('/manage-user', 'landing-page')->name('manage-user');
+Volt::route('/manage-quantity-types', 'landing-page')->name('manage-quantity-types');
