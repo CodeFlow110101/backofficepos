@@ -73,7 +73,13 @@ $delete = function () {
 };
 
 $submit = function () {
+
     $this->validate();
+
+    if (!$this->isStockAvailable()) {
+        $this->addError('selectedStocks', 'Some of the stocks are not available');
+        return;
+    }
 
     if ($this->deliveryId) {
         Delivery::find($this->deliveryId)->update([
@@ -99,6 +105,16 @@ $submit = function () {
     }
 
     $this->redirectRoute('delivery', navigate: true);
+};
+
+$isStockAvailable = function () {
+    foreach (Stock::whereIn('id', array_keys($this->selectedStocks))->get(['id', 'quantity'])->keyBy('id') as $id => $quantity) {
+        if ($this->selectedStocks[$id] > $quantity['quantity']) {
+            return false;
+        }
+    }
+
+    return true;
 };
 
 mount(function ($id) {
