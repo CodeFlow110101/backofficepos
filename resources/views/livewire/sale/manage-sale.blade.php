@@ -291,7 +291,7 @@ mount(function ($id) {
                                 </button>
                                 @else
                                 <button @click="showDeleteModal = true" type="button" class="bg-amber-500 rounded-lg whitespace-nowrap px-10 py-2 w-min text-lg text-white">
-                                    <div wire:loading.remove wire:target="submit">Delete</div>
+                                    <div>Delete</div>
                                 </button>
                                 @endif
                             </div>
