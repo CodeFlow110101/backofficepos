@@ -26,4 +26,9 @@ class Delivery extends Model
     {
         return $this->hasMany(DeliveyStock::class, 'delivery_id', 'id');
     }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class, 'delivery_id', 'id');
+    }
 }

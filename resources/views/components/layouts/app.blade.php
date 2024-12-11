@@ -7,6 +7,8 @@
     @vite('resources/css/app.css')
     <title>{{ $title ?? 'Page Title' }}</title>
     <script src="{{asset('js/alpine.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>

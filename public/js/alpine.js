@@ -1,7 +1,6 @@
 function deliveryStockQuantityValidator() {
   return {
     quantity: null,
-    stockId: null,
     avlStock: null,
     stockPrice: null,
     totalStock: null,
@@ -25,38 +24,55 @@ function deliveryStockQuantityValidator() {
   };
 }
 
-
-
-function drag() {
+function saleTotalPriceCalculator() {
   return {
-      startY: 0,
-      translateY: 0,
-      isDragging: false,
+    stocks: null,
+    get calculate() {
+      total = 0;
+      this.stocks.forEach(value => {
+        total += value.quantity * value.stock.inventory.price;
+      });
+      return total;
+    }
+  };
+}
 
-      startDragging(event) {
-          this.isDragging = true;
-          this.startY = event.touches ? event.touches[0].clientY : event.clientY;
-      },
+function handleFile() {
+  return {
+    handleFileSelect(event) {
+      const file = event.target.files[0];
 
-      drag(event) {
-          if (!this.isDragging) return;
-          const currentY = event.touches ? event.touches[0].clientY : event.clientY;
-          const distance = currentY - this.startY;
+      if (file) {
+        this.$wire.fileName = file.name;
+        this.$wire.fileSize = Math.floor(file.size / (1024 * 1024));
+      } else {
+        this.$wire.fileName = "";
+        this.$wire.fileSize = null;
+      }
+    },
+    uploadFile() {
+      Livewire.dispatch("loader", { value: true });
 
-          if (distance > 0 && distance < 150) {
-              this.translateY = distance; // Adjust sensitivity here
-          }
-      },
+      var formData = new FormData();
+      var file = this.$refs.file.files[0];
+      formData.append("file", file);
 
-      stopDragging() {
-          this.isDragging = false;
-
-          // Reset or snap back based on the position
-          if (this.translateY > 100) {
-              this.translateY = 100; // You can add more logic here for actions like notifications
-          } else {
-              this.translateY = 0;
-          }
-      },
-  }
+      $.ajax({
+        url: "/upload-file",
+        type: "POST",
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          Livewire.dispatch("handle-file", {
+            name: response["name"],
+            path: response["path"]
+          });
+        }
+      });
+    }
+  };
 }

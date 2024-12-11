@@ -56,14 +56,14 @@ mount(function () {
             </div>
             <div class="@if(in_array($path ,['delivery' , 'manage-delivery'])) text-white @else group-hover:text-white transition-colors duration-200 @endif">Delivery</div>
         </a>
-        <div class="flex justify-start gap-2 items-center hover:bg-amber-500 p-2 transition-colors duration-200 rounded-lg group">
+        <a href="/sale" wire:navigate class="flex justify-start gap-2 items-center font-medium p-2 @if(in_array($path ,['sale' , 'manage-sale'])) bg-amber-500 @else text-black/70 hover:bg-amber-500 transition-colors duration-200 @endif rounded-lg group">
             <div>
-                <svg class="w-5 h-5 text-black/70 group-hover:text-white transition-colors duration-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 @if(in_array($path ,['sale' , 'manage-sale'])) text-white @else text-black/70 group-hover:text-white transition-colors duration-200 @endif" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
                 </svg>
             </div>
-            <div class="group-hover:text-white transition-colors duration-200">Sales</div>
-        </div>
+            <div class="@if(in_array($path ,['sale' , 'manage-sale'])) text-white @else group-hover:text-white transition-colors duration-200 @endif">Sales</div>
+        </a>
         <a href="/user" wire:navigate class="flex justify-start gap-2 items-center font-medium p-2 @if(in_array($path ,['user' , 'manage-user'])) bg-amber-500 @else text-black/70 hover:bg-amber-500 transition-colors duration-200 @endif rounded-lg group">
             <div>
                 <svg class="w-5 h-5 @if(in_array($path ,['user' , 'manage-user'])) text-white @else text-black/70 group-hover:text-white transition-colors duration-200 @endif" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

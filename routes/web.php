@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileUploads;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -21,4 +22,7 @@ Volt::route('/manage-delivery', 'landing-page')->name('manage-delivery');
 Volt::route('/user', 'landing-page')->name('user');
 Volt::route('/manage-user', 'landing-page')->name('manage-user');
 Volt::route('/manage-quantity-types', 'landing-page')->name('manage-quantity-types');
-Volt::route('/test', 'sale.sale')->name('test');
+Volt::route('/sale', 'landing-page')->name('sale');
+Volt::route('/manage-sale', 'landing-page')->name('manage-sale');
+
+Route::post('/upload-file', [FileUploads::class, 'store']);

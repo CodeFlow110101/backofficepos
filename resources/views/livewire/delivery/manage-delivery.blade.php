@@ -8,14 +8,14 @@ use App\Models\Warehouse;
 
 use function Livewire\Volt\{state, mount, rules, with, updated, computed};
 
-state(['warehouse', 'salesperson', 'search', 'filter' => 0, 'selectedStocks' => [], 'vehicleno', 'deliveryId']);
+state(['warehouse', 'salesperson', 'search', 'filter' => 0, 'selectedStocks' => [], 'vehicleno', 'deliveryId', 'areSalesAvailable' => false]);
 
 rules(['warehouse' => 'required', 'salesperson' => 'required', 'vehicleno' => 'required', 'selectedStocks' => 'required']);
 
 with(fn() => [
     'warehouses' => Warehouse::get(),
     'stocks' => Stock::when(
-        $this->filter != 0, // Condition for applying `whereIn`
+        $this->filter != 0,
         function ($query) {
             if ($this->filter == 1) {
                 $query->whereIn('id', array_keys($this->selectedStocks));
@@ -120,7 +120,8 @@ $isStockAvailable = function () {
 mount(function ($id) {
     $this->deliveryId = $id;
     if ($id) {
-        $delivery = Delivery::find($id);
+        $delivery = Delivery::with('sales')->find($id);
+        $this->areSalesAvailable = $delivery->sales->isNotEmpty();
         $this->warehouse = $delivery->warehouse_id;
         $this->salesperson = $delivery->user_id;
         $this->vehicleno = $delivery->vehicle_no;
@@ -176,7 +177,7 @@ mount(function ($id) {
                         </thead>
                         <tbody>
                             @foreach($stocks as $stock)
-                            <tr x-data="deliveryStockQuantityValidator" x-init="$watch('quantity', value => validate()); stockId={{ $stock->id }}; avlStock={{ $stock->quantity }}; stockPrice={{ $stock->inventory->price }}; quantity={{array_key_exists($stock->id,$selectedStocks) ? $selectedStocks[$stock->id] : 0}}; totalStock={{ (array_key_exists($stock->id,$selectedStocks) && $deliveryId) ?  ($selectedStocks[$stock->id] + $stock->quantity) : 0}};" class="text-black/50 border-b border-black/20 w-full text-center">
+                            <tr wire:key="{{ $stock->id }}" x-data="deliveryStockQuantityValidator" x-init="$watch('quantity', value => validate()); avlStock={{ $stock->quantity }}; stockPrice={{ $stock->inventory->price }}; quantity={{array_key_exists($stock->id,$selectedStocks) ? $selectedStocks[$stock->id] : 0}}; totalStock={{ (array_key_exists($stock->id,$selectedStocks) && $deliveryId) ?  ($selectedStocks[$stock->id] + $stock->quantity) : 0}};" class="text-black/50 border-b border-black/20 w-full text-center">
                                 <td class="font-normal text-center py-3">{{$stock->inventory->name}}</td>
                                 <td class="font-normal text-center py-3">{{$stock->quantity}}</td>
                                 <td class="font-normal text-center py-3">
@@ -225,7 +226,7 @@ mount(function ($id) {
                                 <select wire:model="salesperson" class="border w-full rounded-lg text-black/70 border-black/30 outline-none p-3">
                                     <option selected value="">Select a Salesperson</option>
                                     @foreach($users as $user)
-                                    <option selected value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('salesperson')
@@ -281,12 +282,18 @@ mount(function ($id) {
                     </svg>
                 </button>
             </div>
+
+
             <div class="grow flex flex-col justify-around">
                 <div class="text-black/60 text-xl font-semibold text-center">Do you really want to delete this delivery note?</div>
+                @if($areSalesAvailable)
+                <div class="text-red-500 font-medium text-center text-sm">The operation cannot be performed because there are sale orders already created for this delivery.</div>
+                @else
                 <div class="flex justify-around w-1/2 mx-auto">
                     <button @click="showDeleteModal = false" class="border border-black/30 py-2 px-4 rounded-xl font-semibold text-black/60">No</button>
                     <button wire:click="delete" class="py-2 px-4 rounded-xl font-semibold text-black/60 bg-amber-500 text-white">Yes</button>
                 </div>
+                @endif
             </div>
             <div class="border-t py-2 border-black/30 text-sm font-semibold text-black/60 italic">Note: This action will revert back all the stocks from the delivery note to there respective warehouse.</div>
         </div>

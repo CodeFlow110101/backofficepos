@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DeliveyStock extends Model
+class SalesStock extends Model
 {
-    protected $table = "deliverystocks";
+    protected $table = 'salestocks';
 
-    protected $fillable = ['stock_id', 'quantity', 'delivery_id'];
+    protected $fillable = ['sale_id', 'stock_id', 'quantity'];
 
     public function stock(): BelongsTo
     {
