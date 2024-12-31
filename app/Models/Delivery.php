@@ -10,7 +10,7 @@ class Delivery extends Model
 {
     protected $table = "deliveries";
 
-    protected $fillable = ['warehouse_id', 'user_id', 'vehicle_no'];
+    protected $fillable = ['warehouse_id', 'user_id', 'vehicle_no', 'issued_by'];
 
     public function warehouse(): BelongsTo
     {
@@ -20,6 +20,11 @@ class Delivery extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function issued_by_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'issued_by', 'id');
     }
 
     public function stocks(): HasMany

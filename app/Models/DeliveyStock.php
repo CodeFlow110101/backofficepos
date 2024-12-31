@@ -9,7 +9,7 @@ class DeliveyStock extends Model
 {
     protected $table = "deliverystocks";
 
-    protected $fillable = ['stock_id', 'quantity', 'delivery_id'];
+    protected $fillable = ['stock_id', 'quantity', 'delivery_id', 'original_quantity'];
 
     public function stock(): BelongsTo
     {

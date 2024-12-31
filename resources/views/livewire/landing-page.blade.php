@@ -1,16 +1,25 @@
 <?php
 
+use App\Models\Delivery;
 use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, layout, mount};
 
-state(['path', 'id']);
+state(['path', 'id', 'url']);
 
 layout('components.layouts.app');
 
 mount(function () {
     $this->path = request()->path();
+    $this->url = request()->url();
     $isAuth = Auth::check();
+
+    if (str_contains($this->path, 'delivery-preview/') && Delivery::where('id', str_replace('delivery-preview/', '', $this->path))->exists()) {
+        $this->id = str_replace('delivery-preview/', '', $this->path);
+        $this->path = 'delivery-preview';
+    } elseif (str_contains($this->path, 'delivery-preview/') && Delivery::where('id', str_replace('delivery-preview/', '', $this->path))->doesntExist()) {
+        abort(404);
+    }
 
     if ($isAuth && in_array($this->path, ['sign-in'])) {
         $this->redirectRoute('stock', navigate: true);
@@ -51,7 +60,7 @@ mount(function () {
             @elseif($path == 'manage-quantity-types')
             <livewire:inventory.manage-quantity-types />
             @elseif($path == 'delivery')
-            <livewire:delivery.delivery />
+            <livewire:delivery.delivery :url="$url"/>
             @elseif($path == 'manage-delivery')
             <livewire:delivery.manage-delivery :id="$id" />
             @elseif($path == 'sale')
@@ -65,5 +74,7 @@ mount(function () {
             @endif
         </div>
     </div>
+    @elseif($path == 'delivery-preview')
+    <livewire:delivery.delivery-preview :id="$id" />
     @endif
 </div>

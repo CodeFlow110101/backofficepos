@@ -5,6 +5,7 @@ use App\Models\DeliveyStock;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\Warehouse;
+use Illuminate\Support\Facades\Auth;
 
 use function Livewire\Volt\{state, mount, rules, with, updated, computed};
 
@@ -91,12 +92,14 @@ $submit = function () {
             'warehouse_id' => $this->warehouse,
             'user_id' => $this->salesperson,
             'vehicle_no' => $this->vehicleno,
+            'issued_by' => Auth::user()->id,
         ]);
 
         foreach ($this->selectedStocks as $id => $quantity) {
             DeliveyStock::create([
                 'stock_id' => $id,
                 'quantity' => $quantity,
+                'original_quantity' => $quantity,
                 'delivery_id' => $delivery->id
             ]);
 

@@ -18,6 +18,7 @@ Volt::route('/setting', 'landing-page')->name('setting');
 Volt::route('/warehouse', 'landing-page')->name('warehouse');
 Volt::route('/manage-warehouse', 'landing-page')->name('manage-warehouse');
 Volt::route('/delivery', 'landing-page')->name('delivery');
+Volt::route('/delivery-preview/{id}', 'landing-page')->name('delivery-preview');
 Volt::route('/manage-delivery', 'landing-page')->name('manage-delivery');
 Volt::route('/user', 'landing-page')->name('user');
 Volt::route('/manage-user', 'landing-page')->name('manage-user');
